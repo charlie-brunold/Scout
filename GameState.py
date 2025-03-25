@@ -135,16 +135,54 @@ class GameState:
         opposing_team = "home" if self.game_state["half"] == "top" else "away"
         self.active_players["pitcher"] = self.fielders[opposing_team][1]  # Position 1 is pitcher
     
-    def record_out(self):
-        """Records an out and advances inning if needed"""
+    def record_out(self, out_type="Generic Out"):
+        """
+        Records an out and advances inning if needed
+        
+        Args:
+            out_type (str): The type of out (e.g., "Strikeout", "Flyout", "Groundout")
+        
+        Returns:
+            dict: Updated game state information
+        """
+        # Create an event for this out
+        event = {
+            "event_type": out_type,
+            "inning": self.game_state["inning"],
+            "half": self.game_state["half"],
+            "batter": self.active_players["batter"],
+            "pitcher": self.active_players["pitcher"],
+            "pre_win_probability": self.win_probability.copy(),
+            "win_probability_added": 0
+        }
+        
+        # Record the out
         self.game_state["outs"] += 1
-        if self.game_state["outs"] >= 3:
+        
+        # Update player statistics
+        self._update_player_stats_for_out(out_type)
+        
+        if self.game_state["outs"] >= 3: # if this out makes 3 outs
+            # Advance to next half-inning
             self.advance_inning()
         else:
             # Reset count for next batter
             self.count = {"balls": 0, "strikes": 0}
             # Advance to next batter in lineup
             self._advance_lineup()
+        
+        # Update win probability after the play
+        self._update_win_probability()
+        event["post_win_probability"] = self.win_probability.copy()
+        event["win_probability_added"] = self._calculate_wpa(event)
+        
+        # Add event to game events
+        self.game_events.append(event)
+        
+        return {
+            "current_state": self.get_display_state(),
+            "event": event
+        }
     
     def _advance_lineup(self):
         """Advances to the next batter in the lineup"""

@@ -1,48 +1,22 @@
 class GameEvent:
-    def __init__(self, game_id, event_time=None, event_type=None):
+    def __init__(self, game_id, event_type=None, timestamp=None):
         """
-        Initializes a game event with a unique identifier, time, and type."
+        Initializes a game event with a unique identifier, type, and timestamp.
+        
         Attributes:
             event_id (str): The unique identifier for the event.
             game_id (str): The unique identifier for the game.
-            event_time (str): The time of the event.
-            event_type (str): The type of the event.
+            event_type (str): The type of event (e.g., pitch, hit, error).
+            timestamp (datetime): The time when the event occurred.     
         """
-        self.event_id = None
-        self.game_id = game_id
-        self.event_time = event_time
+        self.event_id = None  # Will be set when saved to database
+        self.game_id = game_id # which game this event belongs to
         self.event_type = event_type
+        self.timestamp = timestamp # when the event occurred
+    
+    def make_pitch(self, pitcher=None, batter=None, catcher=None):
+        """
+        Records a pitch event in the game. At this point in development, every event will happen after a pitch.
+        """
 
-    """
-    Types of baseball events:
-    - Pitch
-    - Bunt
-    - Single
-    - Double
-    - Triple
-    - Home Run
-    - Error
-    - Walk
-    - Intentional Walk
-    - Hit by Pitch
-    - Strikeout
-    - Flyout
-    - Groundout
-    - Double Play
-    - Force Out
-    - Sacrifice Fly
-    - Sacrifice Bunt
-    - Stolen Base
-    - Caught Stealing
-    - Pickoff
-    - Wild Pitch
-    - Passed Ball
-    - Balk
-    - Ejection
-    - Injury
-    - Substitution
-    - Timeout
-    - Rain Delay
-    - Game Over
-    - Game Resumed
-    """
+
