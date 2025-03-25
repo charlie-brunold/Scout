@@ -1,15 +1,23 @@
-class Player():
-    def __init__(self, name, age, position):
+class Player:
+    def __init__(self, name, age, primary_position):
         """"
         Initializes a baseball player with a name, age, and position.
         Attributes:
             name (str): The name of the player.
             age (int): The age of the player.
-            position (str): The position of the player on the team.
+            primary_position (int): The primary position of the player.
+            secondary_positions (list, int): A list of secondary positions the player can play.
+            player_id (str): The unique identifier for the player.
+            jersey_number (int): The jersey number of the player.
+            team_affiliations (list, Team): A list of teams the player has played for.
         """
         self.name = name
         self.age = age
-        self.position = position
+        self.primary_position = primary_position
+        self.secondary_positions = []
+        self.player_id = None
+        self.jersey_number = None
+        self.team_affiliations = []
 
     def get_details(self):
         """"
