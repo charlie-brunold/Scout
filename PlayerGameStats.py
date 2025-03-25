@@ -10,6 +10,7 @@ class PlayerGameStats:
             fielding_stats (dict): A dictionary containing fielding statistics.
             baserunning_stats (dict): A dictionary containing baserunning statistics.
             miscellaneous_stats (dict): A dictionary containing miscellaneous statistics.
+            advanced_stats (dict): A dictionary containing advanced statistics.
         """
         self.player_id = player_id
         self.game_id = game_id
@@ -41,4 +42,13 @@ class PlayerGameStats:
             'sacrifice_flies': 0,
             'sacrifice_bunts': 0,
             'double_plays': 0
+        }
+        self.advanced_stats = {
+            'batting_average': 0.0,
+            'on_base_percentage': 0.0,
+            'slugging_percentage': 0.0,
+            'on_base_plus_slugging': 0.0,
+            'earned_run_average': 0.0,
+            'WHIP': 0.0,
+            'WAR': 0.0
         }
